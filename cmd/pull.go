@@ -5,7 +5,10 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	// "encoding/json"
 	"fmt"
+	"log"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -15,7 +18,17 @@ var pullCmd = &cobra.Command{
 	Use:   "pull",
 	Short: "Take pull from repo",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("pull called")
+		pullCmd := exec.Command("git", "remote", "-v")
+		stdout, err := pullCmd.CombinedOutput()
+		if err != nil {
+			log.Printf("error: %v", err)
+		}
+		// if err := pullCmd.Start(); err != nil {
+		// 	log.Printf("error while start: %v", err)
+		// }
+
+		log.Printf("pull called output: %s", stdout)
+		fmt.Println("done")
 	},
 }
 
